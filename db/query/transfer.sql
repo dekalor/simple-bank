@@ -12,7 +12,7 @@ RETURNING *;
 SELECT * FROM transfers
 WHERE id = $1 LIMIT 1;
 
--- name: ListTransfer :many
+-- name: ListTransfers :many
 SELECT * FROM transfers
 WHERE
   from_account_id = $1 OR
