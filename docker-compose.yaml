@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=simple_bank
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_SOURCE=postgresql://root:secret@db:5432/simple_bank?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
