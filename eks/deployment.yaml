@@ -17,5 +17,6 @@ spec:
       containers:
       - name: simple-bank-api
         image: 578160493878.dkr.ecr.ap-southeast-3.amazonaws.com/simple-bank:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
